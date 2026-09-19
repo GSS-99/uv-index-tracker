@@ -19,3 +19,5 @@ CREATE TABLE locations (
   longitude DECIMAL(9,6) NOT NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+INSERT INTO users (email) VALUES ('dev@example.com') ON CONFLICT DO NOTHING;
