@@ -28,29 +28,27 @@ function App() {
   }, []); // Empty dependency array means this runs once on component mount
 
   return (
-    <div className="min-h-screen bg-slate-900 text-white flex flex-col items-center justify-center p-6">
-      <div className="max-w-md w-full bg-slate-800 p-6 rounded-xl shadow-xl border border-slate-700">
-        <h1 className="text-2xl font-bold text-sky-400 mb-4 text-center">
+    
+    <div className="container">
+      <div >
+        <h1 className="saved-locations">
           UV Index Tracker — Saved Locations
         </h1>
 
-        {loading && <p className="text-slate-400 text-center">Loading locations...</p>}
-        {error && <p className="text-red-400 text-center">Error: {error}</p>}
+        {loading && <p className="loading">Loading locations...</p>}
+        {error && <p className="error">Error: {error}</p>}
 
         {!loading && !error && locations.length === 0 && (
-          <p className="text-slate-400 text-center">No locations found.</p>
+          <p>No locations found.</p>
         )}
 
-        <ul className="space-y-3">
+        <ul className="locations">
           {locations.map((loc) => (
             <li 
               key={loc.id} 
-              className="p-3 bg-slate-700 rounded-lg flex justify-between items-center"
-            >
-              <span className="font-medium text-slate-100">{loc.city_name}</span>
-              <span className="text-xs text-slate-400">
-                {Number(loc.latitude).toFixed(2)}, {Number(loc.longitude).toFixed(2)}
-              </span>
+             >
+              <span className="city-name">{loc.city_name}</span>
+
             </li>
           ))}
         </ul>

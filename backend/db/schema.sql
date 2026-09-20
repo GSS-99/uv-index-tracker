@@ -1,16 +1,16 @@
--- Clean up existing tables during local dev resets (drops in correct dependency order)
+-- Clean up existing tables during local dev resets
 DROP TABLE IF EXISTS locations;
 DROP TABLE IF EXISTS profiles;
 DROP TABLE IF EXISTS users;
 
--- 1. Users Table
+-- Users Table
 CREATE TABLE users (
   id SERIAL PRIMARY KEY,
   email VARCHAR(255) UNIQUE NOT NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- 2. Profiles Table (1-to-1 relationship with Users)
+-- Profiles Table (1-to-1 relationship with Users)
 CREATE TABLE profiles (
   id SERIAL PRIMARY KEY,
   user_id INT UNIQUE REFERENCES users(id) ON DELETE CASCADE,
@@ -18,7 +18,7 @@ CREATE TABLE profiles (
   preferred_spf INT DEFAULT 30
 );
 
--- 3. Locations Table (1-to-Many relationship with Users)
+-- Locations Table (1-to-Many relationship with Users)
 CREATE TABLE locations (
   id SERIAL PRIMARY KEY,
   user_id INT REFERENCES users(id) ON DELETE CASCADE,
