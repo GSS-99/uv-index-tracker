@@ -17,10 +17,8 @@ router.get('/', async (req, res, next) => {
 // POST /api/locations - Save a location
 router.post('/', async (req, res, next) => {
   try {
-    // Expecting city_name to match schema
     const { city_name, latitude, longitude, user_id } = req.body;
 
-    // Hardcode fallback user_id = 1 for early development until Auth middleware is built
     const activeUserId = user_id || 1;
 
     if (!city_name || latitude === undefined || longitude === undefined) {
@@ -29,12 +27,20 @@ router.post('/', async (req, res, next) => {
       });
     }
 
+    // Convert coordinates to floats before inserting
+    const latNum = parseFloat(latitude);
+    const lonNum = parseFloat(longitude);
+
+    if (isNaN(latNum) || isNaN(lonNum)) {
+      return res.status(400).json({ error: 'Latitude and longitude must be valid numbers' });
+    }
+
     const query = `
       INSERT INTO locations (user_id, city_name, latitude, longitude)
       VALUES ($1, $2, $3, $4)
       RETURNING id, user_id, city_name, latitude, longitude, created_at;
     `;
-    const values = [activeUserId, city_name, latitude, longitude];
+    const values = [activeUserId, city_name, latNum, lonNum];
 
     const { rows } = await db.query(query, values);
     

@@ -4,6 +4,7 @@ const db = require('./db');
 
 const uvRouter = require('./routes/uv');
 const locationsRouter = require('./routes/locations');
+const profilesRouter = require('./routes/profiles');
 
 const app = express();
 const PORT = process.env.PORT || 5001;
@@ -26,6 +27,7 @@ app.get('/api/health', async (req, res) => {
 // Mount Feature Routers
 app.use('/api/uv', uvRouter);
 app.use('/api/locations', locationsRouter);
+app.use('/api/profiles', profilesRouter);
 
 // Centralized Error Handler
 app.use((err, req, res, next) => {
