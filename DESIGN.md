@@ -41,6 +41,6 @@ The database schema is defined and executed directly in `backend/db/schema.sql` 
 ---
 
 ## 5. Frontend Architecture
-* **`src/pages/`**: Main page layouts (`DashboardView`, `AuthView`, `ProfileSettingsView`).
-* **`src/components/`**: Reusable UI components (Navbar, UVDial, ExposureTimer, LocationCard).
+* **`src/pages/`**: Main page layouts (`Dashboard`, `Login`, `Profile`, `Info`).
+* **`src/components/`**: Reusable UI components (SearchBar, UVDial, ExposureTimer, LocationCard).
 * **`src/services/`**: Modular API fetch modules wrapping backend HTTP requests.
