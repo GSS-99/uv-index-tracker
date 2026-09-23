@@ -33,13 +33,6 @@ Today was focused on laying a clean, professional foundation for the full-stack 
 
 ---
 
-### Goals for Tomorrow
-1. **Backend Routes (Raw SQL):** Create `routes/uv.js` (Open-Meteo external API proxy) and `routes/locations.js` (raw SQL CRUD operations for saved locations).
-2. **Frontend Initialization:** Initialize a React app in `frontend/` using Vite and set up Tailwind CSS.
-3. **End-to-End Integration:** Connect React to Express using a `useEffect` fetch call to verify full-stack data flow.
-
-# Developer Journal: UV Index Tracker
-
 ## Day 2: Backend Proxy, Parameterized SQL & React/Vite Setup
 
 **Date:** September 19, 2026
@@ -54,41 +47,26 @@ Today's focus was bridging the Express backend to both an external weather API a
 
 * **Backend API Proxy & Feature Routes:**
 * Created `routes/uv.js` as a proxy endpoint (`GET /api/uv?lat={lat}&lon={lon}`) to query Open-Meteo safely from the server side.
-
-
 * Built `routes/locations.js` supporting CRUD operations (`GET`, `POST`, `DELETE /api/locations`) using parameterized raw SQL queries (`$1, $2, ...`).
-
-
 * Configured Express `express.json()` middleware and mounted feature routers with centralized error handling using `next(error)`.
 
-
-
+---
 
 * **Database Schema Alignment & Seeding:**
-* Aligned backend routes with `schema.sql` (column `city_name`, coordinate precision `DECIMAL(9,6)`).
-
-
+* Aligned backend routes with `schema.sql` (column `city_name`, coordinate precision `DECIMAL(9,6`).
 * Set up foreign key relationships (`REFERENCES users(id) ON DELETE CASCADE`) and added a development seed user (`id: 1`) to enable pre-auth location saving.
 
-
-
+---
 
 * **Frontend Initialization & Tailwind v4:**
 * Initialized a React application in `frontend/` using Vite.
-
-
 * Configured Tailwind CSS v4 using the modern `@tailwindcss/vite` plugin architecture.
 
+---
 
 * **End-to-End Pipeline Verification:**
 * Connected React to Express via a custom `useEffect` fetch call (`http://localhost:5001/api/locations`).
-
-
 * Verified end-to-end data rendering directly from PostgreSQL through Express to the browser UI.
-
-
-
-
 
 ---
 
@@ -96,10 +74,7 @@ Today's focus was bridging the Express backend to both an external weather API a
 
 * **AI Technical Mentor:** Worked alongside **Google Gemini** as a senior full-stack mentor and interview partner.
 
-
 * **Workflow Strategy:** Adopted an API-First testing workflow in Postman before UI integration, catching schema/column mismatches early and establishing solid interview defenses for key architectural choices.
-
-
 
 ---
 
@@ -107,9 +82,7 @@ Today's focus was bridging the Express backend to both an external weather API a
 
 1. **Backend Proxying vs. Direct Client Calls:** Proxying external APIs through Express shields API keys, circumvents browser CORS restrictions, and provides a central bottleneck for future rate-limiting or server-side caching.
 
-
 2. **Parameterized SQL vs. ORMs:** Native `pg.Pool` parameterized queries separate code execution from untrusted input at the database engine level, completely neutralizing SQL injection attacks without ORM overhead.
-
 
 3. **Fixed-Point `DECIMAL(9,6)` for Geolocation:** Storing coordinates with fixed-point decimal precision prevents binary floating-point (`FLOAT`) rounding errors, providing exact accuracy down to ~11 centimeters.
 4. **Vite vs. Create React App (CRA):** Vite serves code over native browser ES Modules (ESM) and uses `esbuild` for dependency pre-bundling, delivering instant dev server startup and lightning-fast Hot Module Replacement (HMR).
@@ -151,8 +124,3 @@ Today’s development was centered around UI/UX design and frontend visual archi
 
 ---
 
-### Goals for Tomorrow (Day 4)
-
-1. **Interactive Search & Location CRUD UI:** Build UI components for user city search and wire up save/delete buttons directly to `POST` and `DELETE /api/locations` endpoints.
-2. **Live UV Forecast Component Integration:** Connect the `/api/uv` backend proxy to the designed UI cards and map raw Open-Meteo data to active visual WHO UV risk index badges.
-3. **Async State & Error UX:** Implement active loading spinners, empty state illustrations, and fallback error handling for network requests.
