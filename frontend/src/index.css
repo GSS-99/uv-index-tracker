@@ -1,13 +1,20 @@
-@import "tailwindcss";
+:root {
+  --color-light: #F8F3F8;
+  --color-dark: #302B30;
+  --color-low: #D3EB74;       /* UV 0 - 2 */
+  --color-moderate: #F8E645;  /* UV 3 - 5 */
+  --color-high: #F9BC67;      /* UV 6 - 7 */
+  --color-very-high: #F88359; /* UV 8 - 10 */
+  --color-extreme: #E5A7FB;   /* UV 11+ */
 
-@theme {
-    --color-light: #F8F3F8;
-    --color-dark: #302B30;
-    --color-low: #D3EB74;
-    --color-moderate: #F8E645;
-    --color-high: #F9BC67;
-    --color-very_high: #F88359;
-    --color-extreme: #E5A7FB;
+  /* Initial default background */
+  --bg-current: var(--color-light);
+}
+
+body {
+  background-color: var(--bg-current);
+  /* Smooth color transition when the UV index changes */
+  transition: background-color 0.5s ease;
 }
 
 .search-bar-container {
