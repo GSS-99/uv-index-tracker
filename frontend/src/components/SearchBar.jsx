@@ -10,7 +10,7 @@ export default function SearchBar ({onAddLocation}) {
     setQuery(event.target.value);
   };
 
-  const handleSearch = async (searchTerm) => { //Fetches data from the open meteo api.
+  const handleSearch = async (searchTerm) => {
     if (!searchTerm.trim()) {
       setResults([]); return;}
       setLoading(true);
@@ -55,7 +55,7 @@ export default function SearchBar ({onAddLocation}) {
   }, [query]);
 
   return(
-    <div className="searchBar">
+    <div className="search-bar-container">
       <input 
       type='search'
       value={query}

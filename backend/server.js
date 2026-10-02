@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const morgan = require('morgan');
 const db = require('./db');
 
 const uvRouter = require('./routes/uv');
@@ -11,6 +12,7 @@ const PORT = process.env.PORT || 5001;
 
 // Global Middleware
 app.use(cors());
+app.use(morgan('dev'));
 app.use(express.json());
 
 // Database Health Check Endpoint

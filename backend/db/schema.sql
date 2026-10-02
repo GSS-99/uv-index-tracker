@@ -23,17 +23,25 @@ CREATE TABLE locations (
   id SERIAL PRIMARY KEY,
   user_id INT REFERENCES users(id) ON DELETE CASCADE,
   city_name VARCHAR(100) NOT NULL,
+  country_name VARCHAR(100) NOT NULL,
+  admin1_name VARCHAR(100) NOT NULL,
   latitude DECIMAL(9,6) NOT NULL,
   longitude DECIMAL(9,6) NOT NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 -- Development Seed Data
--- Creates a baseline dev user (ID 1) so locations can be saved before Auth is built
+-- Creates a baseline dev user (ID 1)
 INSERT INTO users (id, email) 
 VALUES (1, 'dev@example.com') 
 ON CONFLICT (id) DO NOTHING;
 
+-- Seed an initial profile
+INSERT INTO profiles (user_id, fitzpatrick_type, preferred_spf) 
+VALUES (1, 2, 30) 
+ON CONFLICT (id) DO NOTHING;
+
 -- Seed an initial saved location
-INSERT INTO locations (user_id, city_name, latitude, longitude) 
-VALUES (1, 'San Francisco', 37.774900, -122.419400);
+INSERT INTO locations (user_id, city_name, country_name, admin1_name, latitude, longitude) 
+VALUES (1, 'London', 'United Kingdom', 'England', 51.507445, -0.127765) 
+ON CONFLICT (id) DO NOTHING;
