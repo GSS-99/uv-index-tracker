@@ -3,7 +3,7 @@
 ## 1. System Overview & Tech Stack
 A full-stack single-page application (SPA) providing real-time UV index monitoring, personalized skin-exposure calculation, and location bookmarking.
 
-* **Frontend:** React, Vite, Tailwind CSS
+* **Frontend:** React, Vite, CSS
 * **Backend:** Node.js, Express.js
 * **Database:** PostgreSQL (accessed via native `pg` driver using parameterized raw SQL)
 * **External Services:** Open-Meteo Weather API

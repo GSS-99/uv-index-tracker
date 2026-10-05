@@ -42,9 +42,3 @@ Thumbs.db
 *.suo
 *.ntvs*
 *.njsproj
-
-# ==============================================================================
-# 🗄️ Database Tools & Local Prisma Artifacts
-# ==============================================================================
-/backend/prisma/*.db
-/backend/prisma/*.db-journal

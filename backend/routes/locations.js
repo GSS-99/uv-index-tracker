@@ -2,9 +2,23 @@ const express = require('express');
 const router = express.Router();
 const db = require('../db');
 
+const DEV_USER_ID = 1;
+
+router.get('/', async (req, res, next) => {
+  try {
+    const result = await db.query(
+      `SELECT * FROM locations WHERE user_id = $1 ORDER BY created_at DESC`,
+      [DEV_USER_ID]
+    );
+    res.json(result.rows);
+  } catch (err) {
+    next(err);
+  }
+});
+
 router.post('/', async (req, res, next) => {
   const { name, latitude, longitude, country, admin1 } = req.body;
-  const userId = 1;
+  const userId = DEV_USER_ID;
 
   try {
     const result = await db.query(
@@ -15,7 +29,7 @@ router.post('/', async (req, res, next) => {
     );
     res.status(201).json(result.rows[0]);
   } catch (err) {
-    next(err); // Passes database/JS errors directly to server.js middleware
+    next(err);
   }
 });
 

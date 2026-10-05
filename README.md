@@ -9,7 +9,7 @@ A full-stack single-page application (SPA) designed to help users monitor real-t
 ## Features
 * **Real-time UV Dashboard:** Live UV Index and risk classifications powered by Open-Meteo.
 * **Personalized Protection Calculator:** Calculates personalized "Time-to-Burn" safety windows based on Fitzpatrick Skin Types.
-* **Saved Locations Tracker:** Bookmark and monitor frequent geographic locations.
+* **Saved Locations Tracker:** Bookmark and monitor frequent geographic locations powered by Open-Meteo & Big Data Cloud.
 * **Sunscreen Reapplication Timer:** Interactive countdown timer for SPF reapplication alerts.
 
 ---
@@ -18,10 +18,10 @@ A full-stack single-page application (SPA) designed to help users monitor real-t
 
 | Layer | Technology |
 | :--- | :--- |
-| **Frontend** | React, Vite, Tailwind CSS |
+| **Frontend** | React, Vite, CSS |
 | **Backend** | Node.js, Express.js |
 | **Database** | PostgreSQL (Raw SQL via `pg` pool) |
-| **External API** | Open-Meteo API |
+| **External API** | Open-Meteo API, Big Data Cloud API|
 
 ---
 
@@ -53,7 +53,7 @@ npm install
 -Create a .env file in the backend/ directory:
 
 PORT=5001
-DATABASE_URL=postgres://localhost:5432/uv_tracker_db
+DB_URL=postgres://localhost:5432/uv_tracker_db
 
 -Start the backend development server:
 
