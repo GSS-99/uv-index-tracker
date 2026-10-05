@@ -30,7 +30,7 @@ export default function SaveLocation({newLocation}){
             setIsSaving(false)
         };
     }; 
-    return ( <div className='search-bar-container'>
+    return ( <div className='save-location-status'>
         <SearchBar onAddLocation={handleNewLocation}/>
 
         {isSaving && <div className='saving-status'> Saving location...</div>}

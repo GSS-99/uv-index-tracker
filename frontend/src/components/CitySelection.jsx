@@ -1,67 +1,80 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import SaveLocation from '../components/SaveLocation';
 import CurrentLocation from '../components/CurrentLocation';
 import { getLocationsApi } from '../api/locationApi';
 
-export default function CitySelection() {
-    const [selectedCity, setSelectedCity] = useState(null);
-    const [savedCities, setSavedCities] = useState([]);
-    const [listError, setListError] = useState(null);
+export default function CitySelection({ newlyAddedCity, selectedCity, onSelectCity }) {
+  const [currentCity, setCurrentCity] = useState(null);
+  const [savedCities, setSavedCities] = useState([]);
+  const [listError, setListError] = useState(null);
 
-    useEffect(() => {
-        const loadSavedCities = async () => {
-            try {
-                const locations = await getLocationsApi();
-                setSavedCities(locations);
-            } catch (err) {
-                setListError(err.message);
-            }
-        };
-        loadSavedCities();
-    }, []);
-
-    const handleNewCity = (savedCity) => {
-        setSelectedCity(savedCity);
-        setSavedCities((prev) => [savedCity, ...prev]);
+  useEffect(() => {
+    const loadSavedCities = async () => {
+      try {
+        const locations = await getLocationsApi();
+        setSavedCities(locations);
+      } catch (err) {
+        setListError(err.message);
+      }
     };
+    loadSavedCities();
+  }, []);
 
-    const handleCurrentLocation = useCallback((located) => {
-        setSelectedCity((current) => current ?? located);
-    }, []);
+  // Sync newly added city from top SaveLocation component
+  useEffect(() => {
+    if (newlyAddedCity) {
+      setSavedCities((prev) => [newlyAddedCity, ...prev]);
+    }
+  }, [newlyAddedCity]);
 
-    return (
-        <div className="dashboard-container">
-            <SaveLocation newLocation={handleNewCity} />
-            <CurrentLocation onLocated={handleCurrentLocation} />
+  // Set initial selected city when current geolocation arrives
+  const handleCurrentLocation = useCallback(
+    (located) => {
+      setCurrentCity(located);
+      if (!selectedCity) {
+        onSelectCity(located);
+      }
+    },
+    [selectedCity, onSelectCity]
+  );
 
-            {selectedCity && (
-                <div className="selected-city-display">
-                    <h2>{selectedCity.city_name}</h2>
-                </div>
-            )}
+  return (
+    <div className="city-selection-container">
+      {/* Location detection worker */}
+      <CurrentLocation onLocated={handleCurrentLocation} />
 
-            <section className="saved-cities">
-                <h3>Saved cities</h3>
-                {listError && <p className="error">{listError}</p>}
-                {savedCities.length === 0 && !listError && (
-                    <p>No saved cities yet. Search to add one.</p>
-                )}
-                <ul className="saved-cities-list">
-                    {savedCities.map((city) => (
-                        <li key={city.id ?? `${city.city_name}-${city.latitude}`}>
-                            <button
-                                type="button"
-                                className="saved-city-button"
-                                onClick={() => setSelectedCity(city)}
-                            >
-                                {[city.city_name, city.admin1_name, city.country_name]
-                                    .filter(Boolean)
-                                    .join(', ')}
-                            </button>
-                        </li>
-                    ))}
-                </ul>
-            </section>
-        </div>
-    );
+      <section className="saved-cities">
+        {listError && <p className="error">{listError}</p>}
+        {savedCities.length === 0 && !listError && (
+          <p>No saved cities yet. Search to add one.</p>
+        )}
+        <ul className="saved-cities-list">
+          {currentCity && (
+            <li>
+              <button
+                type="button"
+                className="button current-location-btn"
+                onClick={() => onSelectCity(currentCity)}
+              >
+                📍 {currentCity.city_name} (Current Location)
+              </button>
+            </li>
+          )}
+
+          {savedCities.map((city) => (
+            <li key={city.id ?? `${city.city_name}-${city.latitude}`}>
+              <button
+                type="button"
+                className="button"
+                onClick={() => onSelectCity(city)}
+              >
+                {[city.city_name, city.admin1_name, city.country_name]
+                  .filter(Boolean)
+                  .join(', ')}
+              </button>
+            </li>
+          ))}
+        </ul>
+      </section>
+    </div>
+  );
 }

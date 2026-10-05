@@ -1,13 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-function formatPlaceName(place) {
-  return [place.city_name, place.admin1_name, place.country_name]
-    .filter(Boolean)
-    .join(', ');
-}
-
 export default function CurrentLocation({ onLocated }) {
-  const [place, setPlace] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [retryCount, setRetryCount] = useState(0);
@@ -40,7 +33,6 @@ export default function CurrentLocation({ onLocated }) {
             latitude,
             longitude,
           };
-          setPlace(located);
           if (onLocated) {
             onLocated(located);
           }
@@ -58,23 +50,24 @@ export default function CurrentLocation({ onLocated }) {
     );
   }, [onLocated, retryCount]);
 
+  // Don't render anything once location is successfully detected
+  if (!loading && !error) return null;
+
   return (
-    <section className="current-location">
-      <h3>Current location</h3>
+    <div className="current-location-status">
       {loading && <p>Detecting your location...</p>}
       {error && (
         <div>
           <p className="error">{error}</p>
           <button
             type="button"
-            className="saved-city-button"
+            className="button"
             onClick={() => setRetryCount((count) => count + 1)}
           >
             Try again
           </button>
         </div>
       )}
-      {place && <p>{formatPlaceName(place)}</p>}
-    </section>
+    </div>
   );
 }
