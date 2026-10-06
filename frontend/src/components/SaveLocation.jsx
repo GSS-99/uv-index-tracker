@@ -1,39 +1,49 @@
-import React, { useEffect, useState } from 'react';
-import SearchBar from '../components/SearchBar';
-import { saveLocationApi } from '../api/locationApi';
+import React, { useState } from 'react';
+import Menu from './Menu';
 
-export default function SaveLocation({newLocation}){
-    const [isSaving, setIsSaving] = useState(false);
-    const [error, setError] = useState(null);
+export default function SaveLocation({ newLocation }) {
+  const [query, setQuery] = useState('');
 
-    const handleNewLocation = async(location)=>{
-        setIsSaving(true);
-        setError(null);
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    if (!query.trim()) return;
+    
+    // Trigger city search / add logic here
+    setQuery('');
+  };
 
-        const locationInfo = {
-            name: location.name,
-            latitude: location.latitude,
-            longitude: location.longitude,
-            country: location.country || '',
-            admin1: location.admin1 || ''
-        };
-        try {
-            const savedCity = await saveLocationApi(locationInfo);
-            //Send saved location up to Dashboard 
-            if (newLocation){
-                newLocation(savedCity);
-            };
-        }
-        catch (err) { 
-            setError(err.message);
-        } finally { 
-            setIsSaving(false)
-        };
-    }; 
-    return ( <div className='save-location-status'>
-        <SearchBar onAddLocation={handleNewLocation}/>
+  return (
+    <div
+      className="save-location-header"
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        gap: '0.75rem',
+        width: '100%',
+        marginBottom: '1rem',
+      }}
+    >
+      <form
+        onSubmit={handleSearchSubmit}
+        style={{ flex: 1, display: 'flex', alignItems: 'center' }}
+      >
+        <input
+          type="text"
+          placeholder="Search location..."
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          style={{
+            width: '100%',
+            padding: '0.6rem 1rem',
+            borderRadius: '20px',
+            border: '1px solid #ccc',
+            fontSize: '0.95rem',
+          }}
+        />
+      </form>
 
-        {isSaving && <div className='saving-status'> Saving location...</div>}
-        {error && <div className='error'>{error}</div>}
-    </div>)
-};
+      <Menu />
+    </div>
+  );
+}

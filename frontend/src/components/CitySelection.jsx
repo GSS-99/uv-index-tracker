@@ -2,7 +2,12 @@ import React, { useCallback, useEffect, useState } from 'react';
 import CurrentLocation from '../components/CurrentLocation';
 import { getLocationsApi } from '../api/locationApi';
 
-export default function CitySelection({ newlyAddedCity, selectedCity, onSelectCity }) {
+export default function CitySelection({
+  newlyAddedCity,
+  selectedCity,
+  onSelectCity,
+  onCurrentLocationDetected,
+}) {
   const [currentCity, setCurrentCity] = useState(null);
   const [savedCities, setSavedCities] = useState([]);
   const [listError, setListError] = useState(null);
@@ -19,32 +24,35 @@ export default function CitySelection({ newlyAddedCity, selectedCity, onSelectCi
     loadSavedCities();
   }, []);
 
-  // Sync newly added city from top SaveLocation component
   useEffect(() => {
     if (newlyAddedCity) {
       setSavedCities((prev) => [newlyAddedCity, ...prev]);
     }
   }, [newlyAddedCity]);
 
-  // Set initial selected city when current geolocation arrives
+  // Memoized handler to avoid unnecessary re-triggers
   const handleCurrentLocation = useCallback(
     (located) => {
       setCurrentCity(located);
+      if (onCurrentLocationDetected) {
+        onCurrentLocationDetected(located);
+      }
+      // Set initial city only if no city is currently selected
       if (!selectedCity) {
         onSelectCity(located);
       }
     },
-    [selectedCity, onSelectCity]
+    [selectedCity, onSelectCity, onCurrentLocationDetected]
   );
 
   return (
     <div className="city-selection-container">
-      {/* Location detection worker */}
-      <CurrentLocation onLocated={handleCurrentLocation} />
+      {/* Run geolocation worker silently without status markup */}
+      {!currentCity && <CurrentLocation onLocated={handleCurrentLocation} />}
 
       <section className="saved-cities">
         {listError && <p className="error">{listError}</p>}
-        {savedCities.length === 0 && !listError && (
+        {savedCities.length === 0 && !listError && !currentCity && (
           <p>No saved cities yet. Search to add one.</p>
         )}
         <ul className="saved-cities-list">
@@ -67,7 +75,7 @@ export default function CitySelection({ newlyAddedCity, selectedCity, onSelectCi
                 className="button"
                 onClick={() => onSelectCity(city)}
               >
-                {[city.city_name, city.admin1_name, city.country_name]
+                {[city.city_name, city.country_name]
                   .filter(Boolean)
                   .join(', ')}
               </button>

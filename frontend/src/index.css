@@ -1,11 +1,11 @@
 :root {
   --color-light: #F8F3F8;
-  --color-dark: #302B30;
-  --color-low: #D3EB74;       /* UV 0 - 2 */
-  --color-moderate: #F8E645;  /* UV 3 - 5 */
-  --color-high: #F9BC67;      /* UV 6 - 7 */
-  --color-very-high: #F88359; /* UV 8 - 10 */
-  --color-extreme: #E5A7FB;   /* UV 11+ */
+  --color-dark: #3d393d;
+  --color-low: #aeff96;       /* UV 0 - 2 */
+  --color-moderate: #f7eb84;  /* UV 3 - 5 */
+  --color-high: #f7c37a;      /* UV 6 - 7 */
+  --color-very-high: #ff7f78; /* UV 8 - 10 */
+  --color-extreme: #eecdfb;   /* UV 11+ */
 
   /* Initial default background */
   --bg-current: var(--color-light);
@@ -81,10 +81,6 @@ body {
 
 .button:hover {
   background-color: rgba(48, 43, 48, 0.08);
-}
-
-.current-location-btn {
-  font-weight: 600;
 }
 
 /* Status messages & feedback */
