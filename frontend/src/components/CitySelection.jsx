@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState, useRef } from 'react';
 import CurrentLocation from '../components/CurrentLocation';
 import { getLocationsApi } from '../api/locationApi';
 
@@ -11,6 +11,12 @@ export default function CitySelection({
   const [currentCity, setCurrentCity] = useState(null);
   const [savedCities, setSavedCities] = useState([]);
   const [listError, setListError] = useState(null);
+
+  // Keep a stable reference to onSelectCity to prevent callback dependency loops
+  const onSelectCityRef = useRef(onSelectCity);
+  useEffect(() => {
+    onSelectCityRef.current = onSelectCity;
+  }, [onSelectCity]);
 
   useEffect(() => {
     const loadSavedCities = async () => {
@@ -30,24 +36,21 @@ export default function CitySelection({
     }
   }, [newlyAddedCity]);
 
-  // Memoized handler to avoid unnecessary re-triggers
   const handleCurrentLocation = useCallback(
     (located) => {
       setCurrentCity(located);
       if (onCurrentLocationDetected) {
         onCurrentLocationDetected(located);
       }
-      // Set initial city only if no city is currently selected
-      if (!selectedCity) {
-        onSelectCity(located);
+      if (!selectedCity && onSelectCityRef.current) {
+        onSelectCityRef.current(located);
       }
     },
-    [selectedCity, onSelectCity, onCurrentLocationDetected]
+    [selectedCity, onCurrentLocationDetected]
   );
 
   return (
     <div className="city-selection-container">
-      {/* Run geolocation worker silently without status markup */}
       {!currentCity && <CurrentLocation onLocated={handleCurrentLocation} />}
 
       <section className="saved-cities">

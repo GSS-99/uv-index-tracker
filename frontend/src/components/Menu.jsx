@@ -8,7 +8,6 @@ export default function Menu({ onNavigate, onLogout }) {
     setIsOpen((prev) => !prev);
   };
 
-  // Close menu when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (menuRef.current && !menuRef.current.contains(event.target)) {
@@ -32,96 +31,32 @@ export default function Menu({ onNavigate, onLogout }) {
   };
 
   return (
-    <div className="hamburger-menu-container" ref={menuRef} style={{ position: 'relative' }}>
+    <div className="hamburger-menu-container" ref={menuRef}>
       <button
         type="button"
         className="hamburger-button"
         onClick={toggleMenu}
         aria-label="Toggle navigation menu"
         aria-expanded={isOpen}
-        style={{
-          background: 'transparent',
-          border: 'none',
-          fontSize: '1.5rem',
-          cursor: 'pointer',
-          padding: '0.4rem',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
       >
         ☰
       </button>
 
       {isOpen && (
-        <div
-          className="menu-dropdown"
-          style={{
-            position: 'absolute',
-            top: '100%',
-            right: 0,
-            marginTop: '0.5rem',
-            backgroundColor: '#ffffff',
-            borderRadius: '12px',
-            boxShadow: '0 4px 16px rgba(0, 0, 0, 0.15)',
-            padding: '0.5rem 0',
-            minWidth: '150px',
-            zIndex: 1000,
-          }}
-        >
-          <ul style={{ listStyle: 'none', margin: 0, padding: 0 }}>
+        <div className="menu-dropdown">
+          <ul>
             <li>
-              <button
-                type="button"
-                onClick={() => handleAction('home')}
-                style={{
-                  width: '100%',
-                  textAlign: 'left',
-                  background: 'none',
-                  border: 'none',
-                  padding: '0.6rem 1rem',
-                  color: '#333',
-                  fontSize: '0.9rem',
-                  cursor: 'pointer',
-                }}
-              >
+              <button type="button" className="button" onClick={() => handleAction('home')}>
                 Home
               </button>
             </li>
             <li>
-              <button
-                type="button"
-                onClick={() => handleAction('profile')}
-                style={{
-                  width: '100%',
-                  textAlign: 'left',
-                  background: 'none',
-                  border: 'none',
-                  padding: '0.6rem 1rem',
-                  color: '#333',
-                  fontSize: '0.9rem',
-                  cursor: 'pointer',
-                }}
-              >
+              <button type="button" className="button" onClick={() => handleAction('profile')}>
                 Profile
               </button>
             </li>
-            <li style={{ borderTop: '1px solid #eee', marginTop: '0.25rem', paddingTop: '0.25rem' }}>
-              <button
-                type="button"
-                onClick={() => handleAction('logout')}
-                style={{
-                  width: '100%',
-                  textAlign: 'left',
-                  background: 'none',
-                  border: 'none',
-                  padding: '0.6rem 1rem',
-                  color: '#d9534f',
-                  fontSize: '0.9rem',
-                  fontWeight: '500',
-                  cursor: 'pointer',
-                }}
-              >
+            <li className="menu-logout-item">
+              <button type="button" className="button logout-button" onClick={() => handleAction('logout')}>
                 Log Out
               </button>
             </li>

@@ -97,7 +97,7 @@ export default function ReapplicationTimer({ selectedCity, currentCity }) {
         </div>
       ) : (
         <div>
-          <p style={{ margin: '0 0 0.25rem 0', fontSize: '0.85rem', opacity: 0.8 }}>
+          <p className='info'>
             Next sunscreen reapplication in:
           </p>
           <div style={{ fontSize: '1.75rem', fontWeight: 'bold', margin: '0.25rem 0' }}>
@@ -105,16 +105,10 @@ export default function ReapplicationTimer({ selectedCity, currentCity }) {
           </div>
           <button
             type="button"
-            className="button"
+            className="button info"
             onClick={handleResetTimer}
-            style={{
-              fontSize: '0.8rem',
-              opacity: 0.75,
-              textDecoration: 'underline',
-              padding: '0.2rem 0.5rem',
-            }}
           >
-            Cancel timer
+            Stop timer
           </button>
         </div>
       )}

@@ -119,6 +119,12 @@ body {
   align-items: center;
 }
 
+.info{
+  margin: '0 0 0.25rem 0';
+  font-size: '0.85rem';
+  opacity: 0.8
+}
+
 input {
   background-color: rgba(255, 255, 255, 0.6);
   border: 1px solid var(--color-dark);
@@ -201,6 +207,67 @@ input:focus {
 
 .saved-cities-list li {
   margin: 0;
+}
+
+/* Save Location Header Row */
+.save-location-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+/* Hamburger Menu & Dropdown */
+.hamburger-menu-container {
+  position: relative;
+}
+
+.hamburger-button {
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-dark);
+}
+
+.menu-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 0.5rem;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  padding: 0.5rem 0;
+  min-width: 150px;
+  z-index: 1000;
+}
+
+.menu-dropdown ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.menu-dropdown .button {
+  width: 100%;
+  padding: 0.6rem 1rem;
+  font-size: 0.9rem;
+}
+
+.menu-logout-item {
+  border-top: 1px solid #eee;
+  margin-top: 0.25rem;
+  padding-top: 0.25rem;
+}
+
+.logout-button {
+  color: #d9534f;
+  font-weight: 500;
 }
 
 /* ==========================================================================
