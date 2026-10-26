@@ -16,7 +16,7 @@ export function calculateProtectionData(skinTypeNumber, uvIndex) {
   const timeToBurnMinutes = Math.round(selectedType.baseMinutes / safeUv);
 
   let recommendedSpf = 'SPF 15+';
-  let advice = 'Wear sunglasses and apply SPF 15+ if outdoors for prolonged periods.';
+  let advice = 'Wear sunglasses if sunny and apply SPF 15+ if outdoors for prolonged periods.';
 
   if (uvIndex >= 3 && uvIndex <= 5) {
     recommendedSpf = 'SPF 30+';

@@ -62,55 +62,31 @@ export default function ReapplicationTimer({ selectedCity, currentCity }) {
   if (!isCurrentLocation) return null;
 
   return (
-    <div
-      className="reapplication-timer"
-      style={{
-        marginTop: '1rem',
-        padding: '0.75rem 1rem',
-        textAlign: 'center',
-        width: '100%',
-      }}
-    >
+    <div>
       {!isActive ? (
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}>
-          <p style={{ margin: 0, fontSize: '0.95rem', fontWeight: '500' }}>
-            Keep your skin protected!
+        <div className='reminder'>
+          <p>
+            Remember to reapply your sunscreen!
           </p>
           <button
             type="button"
             className="button"
             onClick={handleStartTimer}
-            style={{
-              backgroundColor: 'var(--color-dark)',
-              color: '#ffffff',
-              padding: '0.6rem 1.2rem',
-              borderRadius: '10px',
-              fontWeight: '600',
-              fontSize: '0.9rem',
-              border: 'none',
-              cursor: 'pointer',
-              transition: 'transform 0.1s ease, opacity 0.2s ease',
-            }}
           >
-            Remind me in two hours!
+            <strong>Start timer.</strong>
           </button>
         </div>
       ) : (
-        <div>
-          <p className='info'>
-            Next sunscreen reapplication in:
+        <div className='reminder'>
+          <p className='info'>Next sunscreen reapplication in:  
+            <strong> {formatTime(timeLeft)}</strong>
           </p>
-          <div style={{ fontSize: '1.75rem', fontWeight: 'bold', margin: '0.25rem 0' }}>
-            {formatTime(timeLeft)}
-          </div>
           <button
             type="button"
-            className="button info"
+            className="button"
             onClick={handleResetTimer}
-          >
-            Stop timer
-          </button>
-        </div>
+          > <strong>Stop.</strong> </button>
+        </div>  
       )}
     </div>
   );

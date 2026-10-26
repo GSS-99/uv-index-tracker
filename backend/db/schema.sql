@@ -14,7 +14,7 @@ CREATE TABLE users (
 CREATE TABLE profiles (
   id SERIAL PRIMARY KEY,
   user_id INT UNIQUE REFERENCES users(id) ON DELETE CASCADE,
-  fitzpatrick_type INT CHECK (fitzpatrick_type BETWEEN 1 AND 6),
+  fitzpatrick_type INT CHECK (fitzpatrick_type BETWEEN 1 AND 6) NOT NULL,
   preferred_spf INT DEFAULT 30
 );
 

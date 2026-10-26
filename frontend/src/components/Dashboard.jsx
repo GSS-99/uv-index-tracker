@@ -1,15 +1,31 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import UVDisplay from './UVDisplay';
 import ProtectionCalculator from './ProtectionCalculator';
 import ReapplicationTimer from './ReapplicationTimer';
+import useUvIndex from '../hooks/useUvIndex';
+import { getUvColorVariable } from '../utils/uvColors';
 
 export default function Dashboard({ selectedCity, currentCity }) {
-  const [currentUv, setCurrentUv] = useState(null);
+  const { uvData, loading, error } = useUvIndex(selectedCity);
+
+  useEffect(() => {
+  document.documentElement.style.setProperty(
+    '--bg-current',
+    getUvColorVariable(uvData?.currentUv)
+  );
+}, [uvData]);
 
   return (
     <div className="dashboard-container">
-      <UVDisplay selectedCity={selectedCity} onUvLoaded={setCurrentUv} />
-      <ProtectionCalculator currentUv={currentUv} />
+      <div className="uv-info">
+        <UVDisplay
+          selectedCity={selectedCity}
+          uvData={uvData}
+          loading={loading}
+          error={error}
+        />
+        <ProtectionCalculator currentUv={uvData?.currentUv} />
+      </div>
       <ReapplicationTimer selectedCity={selectedCity} currentCity={currentCity} />
     </div>
   );

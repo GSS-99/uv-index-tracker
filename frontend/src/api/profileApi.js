@@ -1,4 +1,5 @@
 const DEV_USER_ID = 1;
+//hardcoded for testing
 
 export async function getProfileApi() {
   const response = await fetch(`/api/profiles/${DEV_USER_ID}`);
